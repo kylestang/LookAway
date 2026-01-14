@@ -22,7 +22,7 @@ jobs:
           java-version: '17'
 
       - name: Setup Gradle cache
-        uses: gradle/gradle-build-action@v3
+        uses: gradle/actions/setup-gradle@v5
 
       - name: Build debug APK
         run: ./gradlew assembleDebug
