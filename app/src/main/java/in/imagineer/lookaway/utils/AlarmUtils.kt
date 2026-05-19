@@ -47,34 +47,45 @@ object AlarmUtils {
         val startMinute = preferenceManager.startMinute
         val endHour = preferenceManager.endHour
         val endMinute = preferenceManager.endMinute
+        val enabledDays = preferenceManager.enabledDays
         val currentTime = Calendar.getInstance()
         val currentHour = currentTime.get(Calendar.HOUR_OF_DAY)
         val currentMinute = currentTime.get(Calendar.MINUTE)
+        val currentDay = currentTime.get(Calendar.DAY_OF_WEEK)
 
         val startTimeMinutes = startHour * 60 + startMinute
         val endTimeMinutes = endHour * 60 + endMinute
         val currentTimeMinutes = currentHour * 60 + currentMinute
 
-        return if (currentTimeMinutes in startTimeMinutes until endTimeMinutes) {
-            SystemClock.elapsedRealtime() + intervalMillis
-        } else if (currentTimeMinutes < startTimeMinutes) {
-            val nextStartTime = Calendar.getInstance().apply {
-                set(Calendar.HOUR_OF_DAY, startHour)
-                set(Calendar.MINUTE, startMinute)
-                set(Calendar.SECOND, 0)
-                set(Calendar.MILLISECOND, 0)
-            }
-            SystemClock.elapsedRealtime() + (nextStartTime.timeInMillis - System.currentTimeMillis())
-        } else {
-            val nextStartTime = Calendar.getInstance().apply {
-                set(Calendar.HOUR_OF_DAY, startHour)
-                set(Calendar.MINUTE, startMinute)
-                set(Calendar.SECOND, 0)
-                set(Calendar.MILLISECOND, 0)
-                add(Calendar.DAY_OF_YEAR, 1)
-            }
-            SystemClock.elapsedRealtime() + (nextStartTime.timeInMillis - System.currentTimeMillis())
+        val isTodayEnabled = currentDay in enabledDays
+
+        if (isTodayEnabled && currentTimeMinutes in startTimeMinutes until endTimeMinutes) {
+            return SystemClock.elapsedRealtime() + intervalMillis
         }
+
+        if (isTodayEnabled && currentTimeMinutes < startTimeMinutes) {
+            val nextStartTime = Calendar.getInstance().apply {
+                set(Calendar.HOUR_OF_DAY, startHour)
+                set(Calendar.MINUTE, startMinute)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+            }
+            return SystemClock.elapsedRealtime() + (nextStartTime.timeInMillis - System.currentTimeMillis())
+        }
+
+        val nextStartTime = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, startHour)
+            set(Calendar.MINUTE, startMinute)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+            add(Calendar.DAY_OF_YEAR, 1)
+        }
+        // Advance to the next enabled day
+        for (i in 0 until 7) {
+            if (nextStartTime.get(Calendar.DAY_OF_WEEK) in enabledDays) break
+            nextStartTime.add(Calendar.DAY_OF_YEAR, 1)
+        }
+        return SystemClock.elapsedRealtime() + (nextStartTime.timeInMillis - System.currentTimeMillis())
     }
 
     fun startCountdown(

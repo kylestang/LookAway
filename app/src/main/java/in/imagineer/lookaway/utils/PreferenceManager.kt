@@ -3,6 +3,7 @@ package `in`.imagineer.lookaway.utils
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import java.util.Calendar
 
 class PreferenceManager(private val context: Context) {
     private val prefs: SharedPreferences = context.getSharedPreferences(
@@ -73,6 +74,15 @@ class PreferenceManager(private val context: Context) {
                 PreferenceKeys.IS_REMINDER_ACTIVE,
                 value
             )
+        }
+
+    var enabledDays: Set<Int>
+        get() = prefs.getStringSet(PreferenceKeys.ENABLED_DAYS, null)
+            ?.map { it.toInt() }?.toSet()
+            ?: setOf(Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY,
+                Calendar.THURSDAY, Calendar.FRIDAY, Calendar.SATURDAY, Calendar.SUNDAY)
+        set(value) = prefs.edit() {
+            putStringSet(PreferenceKeys.ENABLED_DAYS, value.map { it.toString() }.toSet())
         }
 
     fun remove(key: String) {

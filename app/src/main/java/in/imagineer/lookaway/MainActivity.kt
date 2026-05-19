@@ -5,6 +5,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.SystemClock
+import java.util.Calendar
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -31,6 +32,11 @@ class MainActivity : ComponentActivity() {
     private var endHour by mutableIntStateOf(22)
     private var endMinute by mutableIntStateOf(0)
     private var intervalMinutes by mutableIntStateOf(20)
+
+    private var enabledDays by mutableStateOf(
+        setOf(Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY,
+            Calendar.THURSDAY, Calendar.FRIDAY, Calendar.SATURDAY, Calendar.SUNDAY)
+    )
 
     private var timeUntilNext by mutableLongStateOf(0L)
     private var countdownJob: Job? = null
@@ -93,6 +99,7 @@ class MainActivity : ComponentActivity() {
                         endHour = endHour,
                         endMinute = endMinute,
                         intervalMinutes = intervalMinutes,
+                        enabledDays = enabledDays,
                         hasNotificationPermission = hasNotificationPermission,
                         onToggle = { toggleReminder(preferenceManager) },
                         onTimeChange = { sH, sM, eH, eM ->
@@ -116,6 +123,15 @@ class MainActivity : ComponentActivity() {
                                 startReminder(preferenceManager)
                             }
                         },
+                        onDaysChange = { days ->
+                            enabledDays = days
+                            saveTimePreferences(preferenceManager)
+
+                            if (isReminderActive) {
+                                stopReminder(preferenceManager)
+                                startReminder(preferenceManager)
+                            }
+                        },
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -129,6 +145,7 @@ class MainActivity : ComponentActivity() {
         endHour = preferenceManager.endHour
         endMinute = preferenceManager.endMinute
         intervalMinutes = preferenceManager.intervalMinutes
+        enabledDays = preferenceManager.enabledDays
         isReminderActive = preferenceManager.isReminderActive
     }
 
@@ -138,6 +155,7 @@ class MainActivity : ComponentActivity() {
         preferenceManager.endHour = endHour
         preferenceManager.endMinute = endMinute
         preferenceManager.intervalMinutes = intervalMinutes
+        preferenceManager.enabledDays = enabledDays
         preferenceManager.isReminderActive = isReminderActive
     }
 

@@ -23,16 +23,18 @@ class NotificationReceiver : BroadcastReceiver() {
             val startMinute = preferenceManager.startMinute
             val endHour = preferenceManager.endHour
             val endMinute = preferenceManager.endMinute
+            val enabledDays = preferenceManager.enabledDays
             val startTimeMinutes = startHour * 60 + startMinute
             val endTimeMinutes = endHour * 60 + endMinute
             val currentTime = Calendar.getInstance()
 
+            val currentDay = currentTime.get(Calendar.DAY_OF_WEEK)
             val currentHour = currentTime.get(Calendar.HOUR_OF_DAY)
             val currentMinute = currentTime.get(Calendar.MINUTE)
             val currentTimeMinutes = currentHour * 60 + currentMinute
 
-            // Notify if within active hours
-            if (currentTimeMinutes in startTimeMinutes until endTimeMinutes) {
+            // Notify if within active hours and on an enabled day
+            if (currentDay in enabledDays && currentTimeMinutes in startTimeMinutes until endTimeMinutes) {
                 createNotificationChannel(context)
                 showNotification(context)
             }
