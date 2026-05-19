@@ -10,4 +10,5 @@ object PreferenceKeys {
     const val INTERVAL_MINUTES = "${EYE_BREAK}_interval_minutes"
     const val NEXT_TRIGGER_TIME = "${EYE_BREAK}_next_trigger_time"
     const val IS_REMINDER_ACTIVE = "${EYE_BREAK}_is_reminder_active"
+    const val ENABLED_DAYS = "${EYE_BREAK}_enabled_days"
 }

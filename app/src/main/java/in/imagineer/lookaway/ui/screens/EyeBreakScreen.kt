@@ -1,5 +1,6 @@
 package `in`.imagineer.lookaway.ui.screens
 
+import java.util.Calendar
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 import androidx.compose.foundation.text.KeyboardOptions
@@ -7,6 +8,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.ui.text.input.KeyboardType
 import android.app.Activity
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -16,8 +18,10 @@ import androidx.compose.runtime.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -44,10 +48,12 @@ fun EyeBreakScreen(
     endHour: Int,
     endMinute: Int,
     intervalMinutes: Int,
+    enabledDays: Set<Int>,
     hasNotificationPermission: Boolean,
     onToggle: () -> Unit,
     onTimeChange: (Int, Int, Int, Int) -> Unit,
     onIntervalChange: (Int) -> Unit,
+    onDaysChange: (Set<Int>) -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -391,7 +397,14 @@ fun EyeBreakScreen(
                                 Text("min", color = MaterialTheme.colorScheme.onSurface)
                             }
 
-                            Spacer(modifier = Modifier.height(64.dp))
+                            Spacer(modifier = Modifier.height(16.dp))
+
+                            DayOfWeekSelector(
+                                enabledDays = enabledDays,
+                                onDaysChange = onDaysChange
+                            )
+
+                            Spacer(modifier = Modifier.height(48.dp))
 
                             Button(
                                 onClick = onToggle,
@@ -534,9 +547,84 @@ fun EyeBreakScreen(
                                 )
                             }
                         }
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Row(
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 32.dp),
+                        ) {
+                            val days = listOf(
+                                Calendar.MONDAY to "M",
+                                Calendar.TUESDAY to "T",
+                                Calendar.WEDNESDAY to "W",
+                                Calendar.THURSDAY to "T",
+                                Calendar.FRIDAY to "F",
+                                Calendar.SATURDAY to "S",
+                                Calendar.SUNDAY to "S"
+                            )
+                            days.forEach { (day, label) ->
+                                Text(
+                                    text = label,
+                                    fontSize = 1.8.em,
+                                    fontWeight = FontWeight.Medium,
+                                    color = MaterialTheme.colorScheme.onSurface.copy(
+                                        alpha = if (day in enabledDays) 0.4f else 0.15f
+                                    ),
+                                    modifier = Modifier.padding(horizontal = 6.dp)
+                                )
+                            }
+                        }
                         Spacer(modifier = Modifier.height(8.dp))
                     }
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun DayOfWeekSelector(
+    enabledDays: Set<Int>,
+    onDaysChange: (Set<Int>) -> Unit
+) {
+    val days = listOf(
+        Calendar.MONDAY to "M",
+        Calendar.TUESDAY to "T",
+        Calendar.WEDNESDAY to "W",
+        Calendar.THURSDAY to "T",
+        Calendar.FRIDAY to "F",
+        Calendar.SATURDAY to "S",
+        Calendar.SUNDAY to "S"
+    )
+
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        days.forEach { (day, label) ->
+            val isSelected = day in enabledDays
+            Box(
+                modifier = Modifier
+                    .size(36.dp)
+                    .clip(CircleShape)
+                    .background(
+                        if (isSelected) MaterialTheme.colorScheme.primary
+                        else MaterialTheme.colorScheme.surfaceVariant
+                    )
+                    .clickable {
+                        val newDays = if (isSelected) enabledDays - day else enabledDays + day
+                        if (newDays.isNotEmpty()) onDaysChange(newDays)
+                    },
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = label,
+                    fontSize = 2.em,
+                    fontWeight = FontWeight.Medium,
+                    color = if (isSelected) Color.White
+                    else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                )
             }
         }
     }
