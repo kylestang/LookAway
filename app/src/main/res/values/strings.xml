@@ -1,7 +1,32 @@
 <resources>
     <string name="app_name">LookAway</string>
+    <string name="app_title">🌿 LookAway</string>
     <string name="notification_title">Eye Break Reminder</string>
     <string name="notification_text">Look at object 20 feet away for 20 seconds</string>
     <string name="notification_channel_name">Eye Break Notifications</string>
     <string name="notification_channel_description">Notifications to remind you to look away from screens</string>
+    <string name="eye_break_subtitle">Eye Break Reminder</string>
+    <string name="permission_warning">Grant notification permissions for this app from settings.</string>
+    <string name="active_instruction">Look at an object\n20 feet away\nfor 20 seconds\nevery %d minutes</string>
+    <string name="smartwatch_hint">Enable notifications from this app \nin your smart watch for the best experience</string>
+    <string name="from_label">from </string>
+    <string name="to_label"> to </string>
+    <string name="repeat_every_label">repeat every</string>
+    <string name="minutes_label">min</string>
+    <string name="start_reminders">Start Reminders</string>
+    <string name="stop_reminders">Stop Reminders</string>
+    <string name="next_reminder_after">next reminder after</string>
+    <string name="countdown_hm">%1$dh %2$dm</string>
+    <string name="countdown_ms">%1$dm %2$ds</string>
+    <string name="starts_at">STARTS AT</string>
+    <string name="ends_at">ENDS AT</string>
+    <string name="content_description_play">Play</string>
+    <string name="content_description_stop">Stop</string>
+    <string name="day_monday">M</string>
+    <string name="day_tuesday">T</string>
+    <string name="day_wednesday">W</string>
+    <string name="day_thursday">T</string>
+    <string name="day_friday">F</string>
+    <string name="day_saturday">S</string>
+    <string name="day_sunday">S</string>
 </resources>

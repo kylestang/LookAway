@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">LookAway</string>
+    <string name="app_title">🌿 LookAway</string>
+    <string name="notification_title">Rappel de pause pour les yeux</string>
+    <string name="notification_text">Regardez un objet à 20 pieds pendant 20 secondes</string>
+    <string name="notification_channel_name">Notifications de pause pour les yeux</string>
+    <string name="notification_channel_description">Notifications pour vous rappeler de détourner le regard des écrans</string>
+    <string name="eye_break_subtitle">Rappel de pause pour les yeux</string>
+    <string name="permission_warning">Accordez les permissions de notification pour cette application dans les paramètres.</string>
+    <string name="active_instruction">Regardez un objet\nà 20 pieds\npendant 20 secondes\nchaque %d minutes</string>
+    <string name="smartwatch_hint">Activez les notifications de cette application\nsur votre montre intelligente pour une meilleure expérience</string>
+    <string name="from_label">de </string>
+    <string name="to_label"> à </string>
+    <string name="repeat_every_label">répéter chaque</string>
+    <string name="minutes_label">min</string>
+    <string name="start_reminders">Démarrer les rappels</string>
+    <string name="stop_reminders">Arrêter les rappels</string>
+    <string name="next_reminder_after">prochain rappel dans</string>
+    <string name="countdown_hm">%1$dh %2$dm</string>
+    <string name="countdown_ms">%1$dm %2$ds</string>
+    <string name="starts_at">DÉBUT À</string>
+    <string name="ends_at">FIN À</string>
+    <string name="content_description_play">Démarrer</string>
+    <string name="content_description_stop">Arrêter</string>
+    <string name="day_monday">L</string>
+    <string name="day_tuesday">M</string>
+    <string name="day_wednesday">M</string>
+    <string name="day_thursday">J</string>
+    <string name="day_friday">V</string>
+    <string name="day_saturday">S</string>
+    <string name="day_sunday">D</string>
+</resources>
