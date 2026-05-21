@@ -25,6 +25,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -149,13 +150,13 @@ fun EyeBreakScreen(
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    "🌿 LookAway",
+                    stringResource(R.string.app_title),
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.onSurface
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "Eye Break Reminder",
+                    text = stringResource(R.string.eye_break_subtitle),
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurface
                 )
@@ -187,7 +188,7 @@ fun EyeBreakScreen(
                         ) {
                             Column {
                                 Text(
-                                    text = "Grant notification permissions for this app from settings.",
+                                    text = stringResource(R.string.permission_warning),
                                     style = MaterialTheme.typography.bodyLarge,
                                     color = MaterialTheme.colorScheme.error,
                                     textAlign = TextAlign.Center,
@@ -198,7 +199,7 @@ fun EyeBreakScreen(
                 } else {
                     if (isActive) {
                         Text(
-                            text = "Look at an object\n20 feet away\nfor 20 seconds\nevery $intervalMinutes minutes",
+                            text = stringResource(R.string.active_instruction, intervalMinutes),
                             fontSize = 2.5.em,
                             lineHeight = 1.4.em,
                             fontWeight = FontWeight.Normal,
@@ -211,7 +212,7 @@ fun EyeBreakScreen(
                             modifier = Modifier.padding(horizontal = 32.dp)
                         ) {
                             Text(
-                                text = "Enable notifications from this app \nin your smart watch for the best experience",
+                                text = stringResource(R.string.smartwatch_hint),
                                 fontSize = 2.6.em,
                                 lineHeight = 1.5.em,
                                 fontWeight = FontWeight.Normal,
@@ -267,7 +268,7 @@ fun EyeBreakScreen(
                                 horizontalArrangement = Arrangement.spacedBy(2.dp),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Text("from ", color = MaterialTheme.colorScheme.onSurface)
+                                Text(stringResource(R.string.from_label), color = MaterialTheme.colorScheme.onSurface)
                                 Card(
                                     border = BorderStroke(1.dp, MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f)),
                                     shape = RoundedCornerShape(4.dp),
@@ -317,7 +318,7 @@ fun EyeBreakScreen(
                                         )
                                     }
                                 }
-                                Text(" to ", color = MaterialTheme.colorScheme.onSurface)
+                                Text(stringResource(R.string.to_label), color = MaterialTheme.colorScheme.onSurface)
                                 Card(
                                     border = BorderStroke(1.dp, MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f)),
                                     shape = RoundedCornerShape(4.dp),
@@ -375,7 +376,7 @@ fun EyeBreakScreen(
                                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Text("repeat every", color = MaterialTheme.colorScheme.onSurface)
+                                Text(stringResource(R.string.repeat_every_label), color = MaterialTheme.colorScheme.onSurface)
                                 OutlinedTextField(
                                     colors = OutlinedTextFieldDefaults.colors(
                                         focusedContainerColor= Color.White,
@@ -394,7 +395,7 @@ fun EyeBreakScreen(
                                         },
                                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                                 )
-                                Text("min", color = MaterialTheme.colorScheme.onSurface)
+                                Text(stringResource(R.string.minutes_label), color = MaterialTheme.colorScheme.onSurface)
                             }
 
                             Spacer(modifier = Modifier.height(16.dp))
@@ -418,10 +419,10 @@ fun EyeBreakScreen(
                                 ) {
                                     Icon(
                                         imageVector = Icons.Filled.PlayArrow,
-                                        contentDescription = "Play"
+                                        contentDescription = stringResource(R.string.content_description_play)
                                     )
                                     Text(
-                                        text = "Start Reminders",
+                                        text = stringResource(R.string.start_reminders),
                                         fontSize = 2.6.em,
                                         fontWeight = FontWeight.Medium,
                                     )
@@ -470,12 +471,13 @@ fun EyeBreakScreen(
                                 Spacer(modifier = Modifier.height(120.dp))
 
                                 Text(
-                                    text = "next reminder after",
+                                    text = stringResource(R.string.next_reminder_after),
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.onSurface
                                 )
                                 Text(
-                                    text = if (hours > 0) "${hours}h ${minutes}m" else "${minutes}m ${seconds}s",
+                                    text = if (hours > 0) stringResource(R.string.countdown_hm, hours, minutes)
+                                           else stringResource(R.string.countdown_ms, minutes, seconds),
                                     style = MaterialTheme.typography.titleLarge,
                                     color = MaterialTheme.colorScheme.onSurface
                                 )
@@ -496,11 +498,11 @@ fun EyeBreakScreen(
                             ) {
                                 Icon(
                                     imageVector = Icons.Filled.Close,
-                                    contentDescription = "Stop",
+                                    contentDescription = stringResource(R.string.content_description_stop),
                                     tint = Color.White,
                                 )
                                 Text(
-                                    text = "Stop Reminders",
+                                    text = stringResource(R.string.stop_reminders),
                                     fontSize = 2.5.em,
                                     fontWeight = FontWeight.Medium,
                                     color = Color.White,
@@ -518,7 +520,7 @@ fun EyeBreakScreen(
                         ) {
                             Column {
                                 Text(
-                                    text = "STARTS AT",
+                                    text = stringResource(R.string.starts_at),
                                     fontSize = 1.8.em,
                                     fontWeight = FontWeight.Normal,
                                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f),
@@ -534,18 +536,18 @@ fun EyeBreakScreen(
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 val days = listOf(
-                                    Calendar.MONDAY to "M",
-                                    Calendar.TUESDAY to "T",
-                                    Calendar.WEDNESDAY to "W",
-                                    Calendar.THURSDAY to "T",
-                                    Calendar.FRIDAY to "F",
-                                    Calendar.SATURDAY to "S",
-                                    Calendar.SUNDAY to "S"
+                                    Calendar.MONDAY to R.string.day_monday,
+                                    Calendar.TUESDAY to R.string.day_tuesday,
+                                    Calendar.WEDNESDAY to R.string.day_wednesday,
+                                    Calendar.THURSDAY to R.string.day_thursday,
+                                    Calendar.FRIDAY to R.string.day_friday,
+                                    Calendar.SATURDAY to R.string.day_saturday,
+                                    Calendar.SUNDAY to R.string.day_sunday
                                 )
                                 Row {
-                                    days.forEach { (day, label) ->
+                                    days.forEach { (day, labelRes) ->
                                         Text(
-                                            text = label,
+                                            text = stringResource(labelRes),
                                             fontSize = 3.em,
                                             fontWeight = FontWeight.Medium,
                                             color = MaterialTheme.colorScheme.onSurface.copy(
@@ -558,7 +560,7 @@ fun EyeBreakScreen(
                             }
                             Column {
                                 Text(
-                                    text = "ENDS AT",
+                                    text = stringResource(R.string.ends_at),
                                     fontSize = 1.8.em,
                                     fontWeight = FontWeight.Normal,
                                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f),
@@ -586,20 +588,20 @@ private fun DayOfWeekSelector(
     onDaysChange: (Set<Int>) -> Unit
 ) {
     val days = listOf(
-        Calendar.MONDAY to "M",
-        Calendar.TUESDAY to "T",
-        Calendar.WEDNESDAY to "W",
-        Calendar.THURSDAY to "T",
-        Calendar.FRIDAY to "F",
-        Calendar.SATURDAY to "S",
-        Calendar.SUNDAY to "S"
+        Calendar.MONDAY to R.string.day_monday,
+        Calendar.TUESDAY to R.string.day_tuesday,
+        Calendar.WEDNESDAY to R.string.day_wednesday,
+        Calendar.THURSDAY to R.string.day_thursday,
+        Calendar.FRIDAY to R.string.day_friday,
+        Calendar.SATURDAY to R.string.day_saturday,
+        Calendar.SUNDAY to R.string.day_sunday
     )
 
     Row(
         horizontalArrangement = Arrangement.spacedBy(6.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        days.forEach { (day, label) ->
+        days.forEach { (day, labelRes) ->
             val isSelected = day in enabledDays
             Box(
                 modifier = Modifier
@@ -616,7 +618,7 @@ private fun DayOfWeekSelector(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = label,
+                    text = stringResource(labelRes),
                     fontSize = 2.em,
                     fontWeight = FontWeight.Medium,
                     color = if (isSelected) Color.White
