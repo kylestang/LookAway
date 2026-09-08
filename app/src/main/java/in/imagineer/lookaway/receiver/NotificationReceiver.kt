@@ -66,6 +66,7 @@ class NotificationReceiver : BroadcastReceiver() {
             .setCategory(NotificationCompat.CATEGORY_REMINDER)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
+            .setTimeoutAfter(20_000L) // remove notification after 20 seconds
             .setWhen(System.currentTimeMillis())
             .build()
 
